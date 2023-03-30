@@ -4,8 +4,8 @@
 
 using namespace std;
 
-void encryptFile(int key, string inputFile, string outputFile);
-void decryptFile(int key, string inputFile, string outputFile);
+void encryptFile(int key, string inputFile, string outputFile); //need to  work on calcs
+void decryptFile(int key, string inputFile, string outputFile); // need to work on calcs 
 
 bool encrypt = false;
 bool decrypt = false;
@@ -40,8 +40,8 @@ int main(int argc, char* argv[]){
             }
             else if(argv[i][1] == 'k'){
                 // key
-                int j = i ;
-                while(!isdigit(argv[j][0])){
+                int j = i;
+                while(!isdigit(argv[i][j])){
                     j++;
                 }
                 key = stoi(argv[j]);
@@ -49,6 +49,7 @@ int main(int argc, char* argv[]){
                     key = key % 26;
                 }
                 key = true;
+                cout << "Key: " << key << endl;
             }
             else if(argv[i][1] == 'i'){
                 // input file
@@ -84,7 +85,7 @@ int main(int argc, char* argv[]){
 }
 
 void encryptFile(int key, string inputFile, string outputFile){
-    cout << "Encrypting file.." << endl;
+    cout << "Encrypting file with key: " << key << endl;
     // open input file
     ifstream inFile;
     inFile.open(inputFile);
@@ -99,14 +100,10 @@ void encryptFile(int key, string inputFile, string outputFile){
         // encrypt line based on ascii values
         for(int i = 0; i < line.length(); i++){
             if(isalpha(line[i])){
-                if(isupper(line[i])){
-                    if(int(line[i]) + key > MAX_UPPER){
-                        line[i] = char(MIN_UPPER + (int(line[i]) + key - MAX_UPPER) - 1);
-                    }
-                } else if (islower(line[0])){
-                    if(int(line[i]) + key > MAX_LOWER){
-                        line[i] = char(MIN_LOWER + (int(line[i]) + key - MAX_LOWER) - 1);
-                    }
+                if(isupper(line[i]) && int(line[i]) + key > MAX_UPPER){
+                    line[i] = char(MIN_UPPER + (int(line[i]) + key - MAX_UPPER) - 1);
+                } else if (islower(line[0]) && int(line[i]) + key > MAX_LOWER){
+                    line[i] = char(MIN_LOWER + (int(line[i]) + key - MAX_LOWER) - 1);
                 } else{
                     line[i] = char(int(line[i]) + key); 
                 }
