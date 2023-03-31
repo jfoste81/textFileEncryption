@@ -20,7 +20,7 @@ int main(int argc, char* argv[]){
     bool out = false;
     bool keyExists = false;
 
-    int key = 0;
+    int key; // key for encryption/decryption
     string inputName = "input"; // input file name
     string outputName = "output"; // output file name
 
@@ -54,7 +54,7 @@ int main(int argc, char* argv[]){
             else if(argv[i][1] == 'i'){
                 // input file
                 inputName = argv[i+1];
-                if(inputName.find(".txt") == string::npos){
+                if(inputName.find(".txt") == string::npos){ // appends .txt if not found
                     inputName.append(".txt");
                 }
                  input = true;
@@ -62,23 +62,23 @@ int main(int argc, char* argv[]){
             else if(argv[i][1] == 'o'){
                 // output file
                 outputName = argv[i+1];
-                if(outputName.find(".txt") == string::npos){
+                if(outputName.find(".txt") == string::npos){ // appends .txt if not found
                     outputName.append(".txt");
                 }
                 out = true;
             }
             }
         }
-        if(!input || !out || !key){
-            cout << "Missing command line arguments" << endl;
-            return 0;
-        }
-        
-        if(encrypt){
-            encryptFile(key, inputName, outputName);
-        } else if(decrypt){
-            decryptFile(key, inputName, outputName);
-        }
+    }
+    if(!input || !out || !key){
+        cout << "Missing command line arguments" << endl;
+        return 0;
+    }
+    
+    if(encrypt){
+        encryptFile(key, inputName, outputName);
+    } else if(decrypt){
+        decryptFile(key, inputName, outputName);
     }
 
     return 0; 
