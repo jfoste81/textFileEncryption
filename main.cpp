@@ -1,5 +1,5 @@
 #include <iostream>
-#include <fstream>
+#include <fstream> // file input and output
 #include <vector>
 
 using namespace std;
@@ -28,45 +28,45 @@ int main(int argc, char* argv[]){
         for(int i = 1; i < argc; i++){
             if(argv[i][0] == '-'){
                 if(argv[i][1] == 'e'){
-                encrypt = true;
-            }
-            else if(argv[i][1] == 'd'){
-                decrypt = true;
-            }
-            else if(argv[i][1] == 'k'){
-                // key
-                int j = i ;
-                while(!isdigit(argv[j][0])){
-                    j++;
-                    if(j >= argc){
+                    encrypt = true;
+                }
+                else if(argv[i][1] == 'd'){
+                    decrypt = true;
+                }
+                else if(argv[i][1] == 'k'){
+                    // key
+                    int j = i;
+                    while(!isdigit(argv[j][0])){
+                        j++;
+                        if(j >= argc){
                         cout << "Invalid key" << endl;
                         return 0;
+                        }
                     }
+                    if(isdigit(argv[j][0])){
+                        key = stoi(argv[j]);
+                    }
+                    if(key > 26){
+                        key = key % 26; 
+                    }
+                    keyExists = true;
                 }
-                if(isdigit(argv[j][0])){
-                    key = stoi(argv[j]);
+                else if(argv[i][1] == 'i'){
+                    // input file
+                    inputName = argv[i+1];
+                    if(inputName.find(".txt") == string::npos){ // appends .txt if not found
+                        inputName.append(".txt");
+                    }
+                    input = true;
                 }
-                if(key > 26){
-                    key = key % 26;
+                else if(argv[i][1] == 'o'){
+                    // output file
+                    outputName = argv[i+1];
+                    if(outputName.find(".txt") == string::npos){ // appends .txt if not found
+                        outputName.append(".txt");
+                    }
+                    out = true;
                 }
-                keyExists = true;
-            }
-            else if(argv[i][1] == 'i'){
-                // input file
-                inputName = argv[i+1];
-                if(inputName.find(".txt") == string::npos){ // appends .txt if not found
-                    inputName.append(".txt");
-                }
-                 input = true;
-            }
-            else if(argv[i][1] == 'o'){
-                // output file
-                outputName = argv[i+1];
-                if(outputName.find(".txt") == string::npos){ // appends .txt if not found
-                    outputName.append(".txt");
-                }
-                out = true;
-            }
             }
         }
     }
